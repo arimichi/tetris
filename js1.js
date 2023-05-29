@@ -165,16 +165,25 @@ function keyUp (e) {                                  //キーが離されたと
 //イベントハンドラー(スマホタップ)
 let startX = 0;
 let startY = 0;
+// 画面幅
+let windowWidth = document.documentElement.clientWidth;
+// ゲーム黒画面中央値
+windowWidth = windowWidth / 2;
+// console.log(windowWidth);
 function touchStart (e) {
+	// console.log('touchStart');
 	e.preventDefault();
 	startX = e.touches[0].pageX;
 	startY = e.touches[0].pageY;
+	// console.log(startX);
 
 	let afterTetro = tetroList[0].tetro.concat();
 	let positionX = tetroList[0].x;
 	let positionY = tetroList[0].y;
 
-	if (startY < 500 && startY > 200 && startX > 85 && startX < 165) {
+	if (startY < 400 && startY > 50 && startX > (windowWidth - 50) && startX < (windowWidth + 50)) {
+		// if (startY < 500 && startY > 200 && startX > 85 && startX < 165) {
+		console.log('回転');
 		afterTetro = [];
 		for (let i = 0; i < 4; i++) {
 			afterTetro.push(tetroList[0].tetro[i * 2 + 1] * -1);
@@ -182,13 +191,19 @@ function touchStart (e) {
 		}
 		afterTetro.push(tetroList[0].tetro[8]);
 	}
-	if (startY > 200 && startX < 80) {
+	if (startY > 50 && startX < (windowWidth - 60)) {
+		// if (startY > 200 && startX < 80) {
+		console.log('左');
 		positionX = tetroList[0].x - 1;
 	}
-	if (startY > 200 && startX > 170) {
+	if (startY > 50 && startX > (windowWidth + 60)) {
+		// if (startY > 200 && startX > 170) {
+		console.log('右');
 		positionX = tetroList[0].x + 1;
 	}
-	if (startY > 500 && startX > 85 && startX < 165) {
+	if (startY > 400 && startX > (windowWidth - 50) && startX < (windowWidth + 50)) {
+		// if (startY > 500 && startX > 85 && startX < 165) {
+		console.log('下');
 		tetroDown = true;
 	}
 	let isMove = judgeMove(afterTetro, positionX, positionY);
